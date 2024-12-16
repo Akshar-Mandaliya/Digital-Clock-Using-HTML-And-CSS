@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Digital Clock</title>
+    <style>
+        body {
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #232f3e; /* Amazon Orange */
+            font-family: Arial, sans-serif;
+        }
+
+        .digital-clock {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background-color: #146eb4; /* Amazon Blue */
+            padding: 20px;
+            border: 5px solid #FF9900;
+            border-radius: 10px;
+            color: #ffffff;
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .week {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .week div {
+            padding: 10px 20px;
+            border-radius: 5px;
+            background-color: #0055a2;
+            text-align: center;
+            color: #ffffff;
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        .week .active {
+            background-color: #ff9900; /* Highlight current day */
+            color: #000000;
+        }
+
+        .time {
+            display: flex;
+            align-items: center;
+            font-size: 48px;
+            font-weight: bold;
+        }
+
+        .dot {
+            margin: 0 10px;
+            animation: blink 1s infinite;
+        }
+
+        @keyframes blink {
+            0%, 100% {
+                opacity: 1;
+            }
+            50% {
+                opacity: 0;
+            }
+        }
+
+        .seconds {
+            font-size: 36px;
+            margin-left: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="digital-clock">
+        <div class="week">
+            <div id="SUN">SUN</div>
+            <div id="MON">MON</div>
+            <div id="TUE">TUE</div>
+            <div id="WED">WED</div>
+            <div id="THU">THU</div>
+            <div id="FRI">FRI</div>
+            <div id="SAT">SAT</div>
+        </div>
+        <div class="time">
+            <div id="hour">12</div>
+            <div class="dot">:</div>
+            <div id="min">05</div>
+            <div class="dot">:</div>
+            <div id="sec">30</div>
+        </div>
+    </div>
+
+    <script>
+        function updateClock() {
+            const now = new Date();
+            const hours = String(now.getHours()).padStart(2, '0');
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            const seconds = String(now.getSeconds()).padStart(2, '0');
+            const dayIndex = now.getDay();
+            const days = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"];
+
+            // Update time
+            document.getElementById('hour').textContent = hours;
+            document.getElementById('min').textContent = minutes;
+            document.getElementById('sec').textContent = seconds;
+
+            // Update active day
+            days.forEach((day, index) => {
+                const dayElement = document.getElementById(day);
+                if (index === dayIndex) {
+                    dayElement.classList.add('active');
+                } else {
+                    dayElement.classList.remove('active');
+                }
+            });
+        }
+
+        // Initial update and set interval for every second
+        updateClock();
+        setInterval(updateClock, 1000);
+    </script>
+</body>
+</html>
